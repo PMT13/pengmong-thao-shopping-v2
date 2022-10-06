@@ -1,0 +1,35 @@
+<nav class="navbar shadow sticky-top bg-primary">
+  <div class="d-flex justify-content-between w-100">
+
+    <div class="d-flex align-items-center">
+      <div class="navbar-brand fs-3 text-light">SStore</div>
+    </div>
+
+    <div *ngIf="isLoggedIn" class="d-flex align-items-center">
+      <div class="form-floating">
+        <input
+          [ngModel]="searchText"
+          (ngModelChange)="onSearchTextChange()"
+          type="text" class="form-control" id="search-input"
+        >
+        <label for="search-input">Search</label>
+      </div>
+    </div>
+
+    <div *ngIf="isLoggedIn" class="d-flex flex-row align-items-center">
+      <div class="fs-4 text-light">Welcome, {{user.username}}</div>
+      <button
+        (click)="goToCart()"
+        class="btn btn-outline-light m-3">
+        <i class="bi bi-cart"></i>
+        Cart ({{cartCount}})
+      </button>
+      <button
+        (click)="goToProducts()"
+        class="btn btn-outline-light m-3">
+        All Products
+      </button>
+      <button (click)="logout()" class="btn btn-outline-light m-3">Logout</button>
+    </div>
+  </div>
+</nav>
