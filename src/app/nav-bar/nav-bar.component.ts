@@ -16,7 +16,7 @@ export class NavBarComponent implements OnInit {
   @Output() onLog = new EventEmitter<boolean>();
   isLoggedIn: boolean = this.status.getLoginStatus();
   searchText: string = "";
-  cartCount: number = 0;
+  cartSize: number = this.data.getCartSize();
   user: IAccount = this.status.getUser();
 
   constructor(private status: StatusService ,private data: DataService, private httpService: HttpService) {
@@ -26,8 +26,8 @@ export class NavBarComponent implements OnInit {
     this.status.$user.subscribe((user) => {
       this.user = user;
     });
-    this.data.$cartCount.subscribe((count) => {
-      this.cartCount = count;
+    this.data.$cartSize.subscribe((count) => {
+      this.cartSize = count;
     });
   }
 

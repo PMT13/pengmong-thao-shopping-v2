@@ -7,6 +7,7 @@ import {StatusService} from "../status.service";
 import {DataService} from "../data.service";
 import {ICart} from "../interfaces/ICart";
 import {IAccount} from "../interfaces/IAccount";
+import {first} from "rxjs";
 
 @Component({
   selector: 'app-product',
@@ -16,30 +17,37 @@ import {IAccount} from "../interfaces/IAccount";
 export class ProductComponent implements OnInit {
 
   @Input() product!: IProduct;
-  @Input() inCart!: boolean;      // this doesn't check to see if item is in cart, checks to see if we looking at our cart
   quantity: number = 1;
-  cartCount: number = this.data.cartCount;
   cart: ICart = this.data.cart;
   user: IAccount = this.status.getUser();
 
-  constructor(private status: StatusService ,private data: DataService, private httpService: HttpService) { }
+  constructor(private status: StatusService ,private data: DataService, private httpService: HttpService) {
+
+  }
 
   ngOnInit(): void {
   }
 
-  updateCart(action: string){
-    // if(action === "add") {
-    //   const newCartItem: ICartItem =
-    //     {
-    //       id: uuidv4(),
-    //       count: this.cartCount,
-    //       product: this.product
-    //     }
-    //   this.cart.productList.push(newCartItem);
-    // }else{
-    //   this.cart.productList = this.cart.productList.filter(cartItem => cartItem.product.id !== this.product.id);
-    // }
-    // this.productService.updateProductList(this.cart);
+  addToCart(){
+    const item: ICartItem = {id: uuidv4(), count: this.quantity, product: this.product};
+    this.cart.productList.push(item);
+    this.httpService.updateCart(this.cart).pipe(first()).subscribe({
+      next: () => {
+        this.data.getCart();
+        this.data.changeCartSize(this.quantity);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  addQuantity(){
+    this.quantity++;
+  }
+
+  minusQuantity(){
+    this.quantity--;
   }
 }
 

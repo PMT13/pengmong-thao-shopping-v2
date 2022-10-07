@@ -15,7 +15,7 @@ export class ProductListComponent implements OnInit {
   productList: IProduct[] = this.data.productList;
 
   constructor(private status: StatusService ,private data: DataService, private httpService: HttpService) {
-    this.data.$productList.pipe(first()).subscribe((list) => {
+    this.data.$productList.subscribe((list) => {
       this.productList = list;
     });
   }

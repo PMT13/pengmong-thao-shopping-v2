@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
     }else{
       this.status.setUser(foundAccount);
       this.status.setLoginStatus(true);
+      this.data.getCart();
     }
   }
   register(){

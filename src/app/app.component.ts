@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {StatusService} from "./status.service";
 import {DataService} from "./data.service";
-import {first} from "rxjs";
 
 @Component({
   selector: 'app-root',

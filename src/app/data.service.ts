@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {IProduct} from "./interfaces/IProduct";
 import {ICart} from "./interfaces/ICart";
-import {ICartItem} from "./interfaces/ICartItem";
 import {HttpService} from "./http.service";
 import {StatusService} from "./status.service";
 import {first, Subject} from "rxjs";
@@ -15,15 +14,15 @@ export class DataService {
   accountList!: IAccount[];
   productList!: IProduct[];
   cart!: ICart;
-  cartCount: number = 0;
+  cartSize: number = 0;
 
   $accountList: Subject<IAccount[]> = new Subject<IAccount[]>();
   $productList: Subject<IProduct[]> = new Subject<IProduct[]>();
   $cart: Subject<ICart> = new Subject<ICart>();
-  $cartCount: Subject<number> = new Subject<number>();
+  $cartSize: Subject<number> = new Subject<number>();
 
   constructor(private httpService: HttpService, private statusService: StatusService) {
-    this,this.getAccounts();
+    this.getAccounts();
     this.getProducts();
   }
 
@@ -56,11 +55,21 @@ export class DataService {
     this.httpService.getCart(user.id).pipe(first()).subscribe({
       next: data => {
         this.cart = data;
+        this.cartSize = this.cart.productList.length;
+        this.$cartSize.next(this.cartSize);
         this.$cart.next(this.cart);
       },
       error: (err) => {
         console.error(err);
       }
     })
+  }
+
+  getCartSize(){
+    return this.cartSize;
+  }
+  changeCartSize(increment: number){
+    this.cartSize += increment;
+    this.$cartSize.next(this.cartSize);
   }
 }

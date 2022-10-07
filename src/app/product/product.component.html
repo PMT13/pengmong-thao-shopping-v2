@@ -9,37 +9,19 @@
     </h6>
   </div>
 
-  <div *ngIf="!inCart" class="card-footer text-muted text-center">
+  <div class="card-footer text-muted text-center">
     <div class="d-flex flex-row justify-content-around m-3">
-      <button class="btn btn-outline-primary">
+      <button class="btn btn-outline-primary" (click)="minusQuantity()">
         <i class="bi bi-dash-lg"></i>
       </button>
       <h3>{{quantity}}</h3>
-      <button class="btn btn-outline-primary">
+      <button class="btn btn-outline-primary" (click)="addQuantity()">
         <i class="bi bi-plus-lg"></i>
       </button>
     </div>
-    <button class="btn btn-outline-primary" (click)="updateCart('add')">
+    <button class="btn btn-outline-primary" (click)="addToCart()">
       <i class="bi bi-plus-circle"></i>
       <div>Add To Cart</div>
     </button>
   </div>
-
-  <div *ngIf="inCart" class="card-footer text-muted text-center">
-    <div class="d-flex flex-row justify-content-around m-3">
-      <button class="btn btn-outline-primary">
-        <i class="bi bi-dash-lg"></i>
-      </button>
-      <h3>{{cartCount}}</h3>
-      <button class="btn btn-outline-primary">
-        <i class="bi bi-plus-lg"></i>
-      </button>
-    </div>
-
-    <button class="btn btn-outline-danger m-1" (click)="updateCart('remove')">
-      <i class="bi bi-trash"></i>
-      <div>Remove</div>
-    </button>
-  </div>
-
 </div>

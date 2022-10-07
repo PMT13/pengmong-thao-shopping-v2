@@ -1,1 +1,8 @@
-<p>cart works!</p>
+<div class="d-flex flex-wrap">
+  <app-cart-item
+    *ngFor="let item of cartItems"
+    [item]="item"
+    class="w-25 p-2"
+  ></app-cart-item>
+</div>
+
